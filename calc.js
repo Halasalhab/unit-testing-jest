@@ -1,9 +1,10 @@
 // calculator.js
-function calc(...args) {
+const calc = (...args) => {
     let result = 0;
     let operator = '+';
   
     for (const arg of args) {
+        console.log(arg);
       if (typeof arg === 'number') {
         if (operator === '+') {
           result += arg;
@@ -21,15 +22,12 @@ function calc(...args) {
         if (arg === '+' || arg === '-' || arg === '*' || arg === '/') {
           operator = arg;
         } else {
-          throw new Error('Invalid operator');
+          throw new Error('Invalid input type');
         }
       }
     }
   
     return result > 1000 ? 0 : result;
-  }
-  
-  module.exports = calc;
-  
-
-module.exports = cacl;
+}  
+calc(4, "+", 5)
+// module.exports = calc;

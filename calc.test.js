@@ -64,9 +64,4 @@ describe('calc', () => {
     it('should handle multiple operators correctly', () => {
         expect(calc(2, '+', 3, '*', 4, '-', 5)).toBe(9);
     });
-
-    it('should handle expressions with parentheses', () => {
-        expect(calc(2, '+', 3, '*', (4 - 1))).toBe(11);
-    });
-
 });

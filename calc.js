@@ -1,33 +1,42 @@
-// calculator.js
-const calc = (...args) => {
-    let result = 0;
-    let operator = '+';
-  
-    for (const arg of args) {
-        console.log(arg);
-      if (typeof arg === 'number') {
-        if (operator === '+') {
-          result += arg;
-        } else if (operator === '-') {
-          result -= arg;
-        } else if (operator === '*') {
-          result *= arg;
-        } else if (operator === '/') {
-          if (arg === 0) {
-            throw new Error('Division by zero');
-          }
-          result /= arg;
+function calc(...args) {
+  let result = args[0];
+  let tempResult = args[0];
+  let operator = null;
+
+  for (let i = 1; i < args.length; i++) {
+    const current = args[i];
+
+    if (typeof current === 'number' && current < 1000) {
+      if (operator === '+') {
+        result += current;
+        tempResult = current;
+      } else if (operator === '-') {
+        result -= current;
+        tempResult = current;
+      } else if (operator === '*') {
+        result -= tempResult;
+        tempResult *= current;
+        result += tempResult;
+      } else if (operator === '/') {
+        if (current === 0) {
+          throw new Error('Division by zero');
         }
-      } else if (typeof arg === 'string') {
-        if (arg === '+' || arg === '-' || arg === '*' || arg === '/') {
-          operator = arg;
-        } else {
-          throw new Error('Invalid input type');
-        }
+        result = result - tempResult + (tempResult / current);
+        tempResult = tempResult / current;
+      } else {
+        throw new Error('Invalid operator');
       }
+    } else if (['+', '-', '*', '/'].includes(current)) {
+      operator = current;
+    } else if (typeof current === 'number' && current >= 1000) {
+      // Ignore numbers bigger than or equal to 1000
+      continue;
+    } else {
+      throw new Error('Invalid input type');
     }
-  
-    return result > 1000 ? 0 : result;
-}  
-calc(4, "+", 5)
-// module.exports = calc;
+  }
+
+  return result;
+}
+
+module.exports = calc;
